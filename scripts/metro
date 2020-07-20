@@ -20,6 +20,9 @@ while : ; do
   echo Waiting for Portworx cluster to come up
 done
 
+curl -L https://github.com/portworx/pxc/releases/download/v0.28.0/pxc-v0.28.0.linux.amd64.tar.gz | tar xvz -C /tmp/.
+mv /tmp/pxc/kubectl-pxc /usr/bin/.
+
 if [ $cluster = 1 ]; then
   for i in $dr_licenses; do
     while ! kubectl exec -n kube-system -it $(kubectl get pods -n kube-system -lname=portworx --field-selector=status.phase=Running | tail -1 | cut -f 1 -d " ") -- /opt/pwx/bin/pxctl license activate --ep UAT $i; do
