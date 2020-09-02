@@ -7,7 +7,7 @@ env:
   #dr_licenses: "XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"
 cluster:
   - id: 1
-    scripts: ["etcd", "metro", "install-storkctl", "helm-backup", "config-backup", "petclinic"]
+    scripts: ["etcd", "metro", "install-storkctl", "helm-backup", "petclinic"]
   - id: 2
     scripts: ["metro", "install-storkctl", "clusterpair-metro"]
 
