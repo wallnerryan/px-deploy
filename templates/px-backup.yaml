@@ -1,2 +1,2 @@
-description: A single Kubernetes cluster with Portworx installed
+description: A single Kubernetes cluster with Portworx and PX-Backup via Helm installed
 scripts: ["install-px", "helm-backup"]
