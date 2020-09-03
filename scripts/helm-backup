@@ -8,9 +8,10 @@ done
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
+cp /usr/local/bin/helm /usr/bin/helm
 
 helm repo add portworx http://charts.portworx.io/ && helm repo update
-helm install px-backup portworx/px-backup --namespace px-backup --create-namespace >> /etc/motd
+helm install px-backup portworx/px-backup --namespace px-backup --create-namespace
 
 until (kubectl get po --namespace px-backup -ljob-name=pxcentral-post-install-hook  -o wide | awk '{print $1, $2, $3}' |grep "Completed"); do echo "Waiting for post install hook";sleep 3; done
 
