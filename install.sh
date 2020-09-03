@@ -9,8 +9,7 @@ NC='\033[0m'
 echo -e ${BLUE}Setting up installation container
 yum install -y git docker >&/dev/null
 echo Cloning repo
-#git clone https://github.com/andrewh1978/px-deploy >&/dev/null
-git clone --branch metro-plus-pxbackup https://github.com/wallnerryan/px-deploy
+git clone https://github.com/andrewh1978/px-deploy >&/dev/null
 cd px-deploy
 echo Building container
 docker build -t px-deploy . >&/dev/null
