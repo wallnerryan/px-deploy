@@ -3,7 +3,6 @@
     "storageDriverName": "ontap-san",
     "backendName": "ontapsan",
     "managementLIF": "192.168.X.X",
-    "dataLIF": "192.168.X.X",
     "svm": "svm_ONTAP",
     "username": "admin",
     "password": "<PASSWORD>",

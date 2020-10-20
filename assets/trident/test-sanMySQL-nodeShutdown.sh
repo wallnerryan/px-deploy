@@ -19,7 +19,7 @@ done
 echo "MySQL Ready..."
 sleep 1
 echo "Fetching K8s node MySQL is running on..."
-origin_node=$(kubectl get deployment -n mysql-ontap -l app=mysql -o wide | tail -n 1 | awk '{print $7}')
+origin_node=$(kubectl get po -n mysql-ontap -l app=mysql -o wide | tail -n 1 | awk '{print $7}')
 
 echo "Shutting down ${origin_node}"
 cat <<EOF | ssh ${origin_node}
@@ -34,5 +34,6 @@ echo "Observe behavior with: "
 echo ""
 echo "watch kubectl get no"
 echo "watch kubectl get po -n mysql-ontap -o wide"
+echo "Force deletion of existing pod if you do not want to wait"
 echo "kubectl describe po <newPod> -n mysql-ontap"
 

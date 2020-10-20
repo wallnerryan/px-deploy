@@ -4,7 +4,7 @@ metadata:
   name: netapp-ontap-iscsi
 provisioner: csi.trident.netapp.io
 parameters:
-  storagePools: "ontapsan_192.168.X.X:aggr1"
+  storagePools: "ontapsan:aggr1"
   backendType: "ontap-san"
   provisioningType: "thin"
   snapshots: "true"
