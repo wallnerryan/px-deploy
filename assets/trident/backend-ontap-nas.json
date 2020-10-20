@@ -1,0 +1,10 @@
+{
+    "version": 1,
+    "storageDriverName": "ontap-nas",
+    "backendName": "ontapnas",
+    "managementLIF": "192.168.X.X",
+    "dataLIF": "192.168.X.X",
+    "svm": "svm_ONTAP",
+    "username": "admin",
+    "password": "<PASSWORD>"
+}

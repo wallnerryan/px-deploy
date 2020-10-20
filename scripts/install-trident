@@ -1,0 +1,73 @@
+
+cat <<EOF | ssh node-1-1
+yum install iscsi-initiator-utils sg3_utils device-mapper-multipath lsscsi -y
+mpathconf --enable --with_multipathd y
+systemctl enable iscsid iscsi
+systemctl enable iscsid multipathd
+systemctl start iscsid iscsi
+systemctl start iscsid multipathd
+setenforce 0
+EOF
+
+cat <<EOF | ssh node-1-2
+yum install iscsi-initiator-utils sg3_utils device-mapper-multipath lsscsi -y
+mpathconf --enable --with_multipathd y
+systemctl enable iscsid iscsi
+systemctl enable iscsid multipathd
+systemctl start iscsid iscsi
+systemctl start iscsid multipathd
+setenforce 0
+EOF
+
+cat <<EOF | ssh node-1-3
+yum install iscsi-initiator-utils sg3_utils device-mapper-multipath lsscsi -y
+mpathconf --enable --with_multipathd y
+systemctl enable iscsid iscsi
+systemctl enable iscsid multipathd
+systemctl start iscsid iscsi
+systemctl start iscsid multipathd
+setenforce 0
+EOF
+
+yum install wget -y
+wget https://github.com/NetApp/trident/releases/download/v20.07.1/trident-installer-20.07.1.tar.gz
+tar -zxvf trident-installer-20.07.1.tar.gz 
+cd trident-installer/
+
+# Install CRDs and Operator
+kubectl create -f deploy/crds/trident.netapp.io_tridentprovisioners_crd_post1.16.yaml
+kubectl create -f deploy/namespace.yaml 
+kubectl create -f deploy/bundle.yaml
+
+#wait for operator
+echo "waiting for trident operator to come up"
+until kubectl get deployment -n trident | grep "1/1"
+do
+  echo "waiting, then trying again"
+  sleep 3
+done
+
+kubectl create -f deploy/crds/tridentprovisioner_cr.yaml
+
+echo "waiting for trident to be installed"
+until kubectl describe tprov trident -n trident | grep "Trident installed"
+do
+  echo "waiting, then trying again"
+  sleep 5
+done
+
+# This will complete succesfully if installed correctly
+./tridentctl -n trident version
+
+cat <<EOF > /etc/motd
++================================================+
+USE THE FOLLOWING DETAILS FOR FUTURE REFERENCES
++================================================+
+- You will need to deploy Trident backend with connectivity to this deployment.
+- Backend JSON Templates in : /assets/trident/
+- Configure backend by editing file and running command on master:
+     ./root/trident-installer/tridentctl -n trident create backend -f /assets/trident/backend.json
+- StorageClass and App examples available in: /assets/trident/
++================================================+
+EOF
+

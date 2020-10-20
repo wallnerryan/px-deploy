@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ontapnas
+provisioner: netapp.io/trident
+mountOptions: ["rw", "nfsvers=4"]
+parameters:
+  backendType: "ontap-nas"

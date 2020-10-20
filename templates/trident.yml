@@ -1,0 +1,9 @@
+description: A single Kubernetes cluster with Trident installed
+clusters: 1
+nodes: 3
+scripts: ["install-trident"]
+
+# This will install Trident to Kubernetes. This does not setup
+# Trident supported storage, connection to a trident backend
+# must be setup post-template initialization by sshing
+# to the master and applying the backend.json. (Example: to Cloud Volumes ONTAP)
