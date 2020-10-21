@@ -29,6 +29,26 @@ systemctl start iscsid multipathd
 setenforce 0
 EOF
 
+cat <<EOF | ssh node-1-4
+yum install iscsi-initiator-utils sg3_utils device-mapper-multipath lsscsi -y
+mpathconf --enable --with_multipathd y
+systemctl enable iscsid iscsi
+systemctl enable iscsid multipathd
+systemctl start iscsid iscsi
+systemctl start iscsid multipathd
+setenforce 0
+EOF
+
+cat <<EOF | ssh node-1-5
+yum install iscsi-initiator-utils sg3_utils device-mapper-multipath lsscsi -y
+mpathconf --enable --with_multipathd y
+systemctl enable iscsid iscsi
+systemctl enable iscsid multipathd
+systemctl start iscsid iscsi
+systemctl start iscsid multipathd
+setenforce 0
+EOF
+
 yum install wget -y
 wget https://github.com/NetApp/trident/releases/download/v20.07.1/trident-installer-20.07.1.tar.gz
 tar -zxvf trident-installer-20.07.1.tar.gz 

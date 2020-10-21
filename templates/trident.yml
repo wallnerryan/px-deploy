@@ -1,6 +1,6 @@
 description: A single Kubernetes cluster with Trident installed
 clusters: 1
-nodes: 3
+nodes: 5 #extra nodes for failure / deletion testing
 scripts: ["install-trident"]
 
 # This will install Trident to Kubernetes. This does not setup
