@@ -21,9 +21,9 @@ sleep 1
 echo "Fetching K8s node MySQL is running on..."
 origin_node=$(kubectl get po -n mysql-ontap -l app=mysql -o wide | tail -n 1 | awk '{print $7}')
 
+# If systemctl is not available, "ifdown <eth>" and "ifup <eth>" would work too.
 echo "Turning off network for ${origin_node} for 20 minutes"
 cat <<EOF | ssh ${origin_node}
-# If systemctl is not available, "ifdown <eth>" and "ifup <eth>" would work too.
 echo "systemctl stop network && sleep 1200 && systemctl start network" >> /tmp/down-up-net.sh
 EOF
 
