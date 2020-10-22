@@ -23,6 +23,7 @@ origin_node=$(kubectl get po -n mysql-ontap -l app=mysql -o wide | tail -n 1 | a
 
 echo "Turning off network for ${origin_node} for 20 minutes"
 cat <<EOF | ssh ${origin_node}
+# If systemctl is not available, "ifdown <eth>" and "ifup <eth>" would work too.
 echo "systemctl stop network && sleep 1200 && systemctl start network" >> /tmp/down-up-net.sh
 EOF
 
