@@ -23,7 +23,7 @@ origin_node=$(kubectl get po -n mysql-ontap -l app=mysql -o wide | tail -n 1 | a
 
 echo "Shutting down ${origin_node}"
 cat <<EOF | ssh ${origin_node}
-echo "shutdown -h now" >> /tmp/halt-node.sh
+echo "shutdown -H now" >> /tmp/halt-node.sh
 EOF
 
 cat <<EOF | ssh ${origin_node}
