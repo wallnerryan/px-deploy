@@ -1,5 +1,3 @@
-#!/bin/bash
-
 url=$vsphere_user:$vsphere_password@$vsphere_host
 for i in $(govc find -k -u $url / -type m -runtime.powerState poweredOff | grep -v " "); do
   if [ "$(govc vm.info -k -u $url -json $i | jq -r '.VirtualMachines[0].Config.ExtraConfig[] | select(.Key==("pxd.deployment")).Value' 2>/dev/null)" = TEMPLATE ] ; then
@@ -15,6 +13,7 @@ cat <<EOF >/vsphere-centos.json
     "vsphere-server": "$vsphere_host",
     "vsphere-user": "$vsphere_user",
     "vsphere-password": "$vsphere_password",
+    "vsphere-resource-pool": "$vsphere_resource_pool",
     "vsphere-cluster": "$vsphere_compute_resource",
     "vsphere-network": "VM Network",
     "vsphere-datastore": "$vsphere_datastore",
@@ -37,6 +36,7 @@ cat <<EOF >/vsphere-centos.json
       "boot_order": "disk,cdrom,floppy",
       "boot_wait": "10s",
       "cluster": "{{user \`vsphere-cluster\`}}",
+      "resource_pool": "{{user \`vsphere-resource-pool\`}}",
       "convert_to_template": true,
       "datastore": "{{user \`vsphere-datastore\`}}",
       "disk_controller_type": "pvscsi",
@@ -141,3 +141,4 @@ EOF
 
 cd /
 /usr/bin/packer build /vsphere-centos.json
+
