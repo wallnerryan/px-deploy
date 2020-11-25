@@ -664,7 +664,7 @@ func vsphere_init() {
 	os.Setenv("vsphere_template_dir", vsphere_template_dir)
 	os.Setenv("vsphere_template_base", vsphere_template_base)
 	os.Setenv("vsphere_datastore", config.Vsphere_Datastore)
-        os.Setenv("vsphere_network", config.Vsphere_Network)
+	os.Setenv("vsphere_network", config.Vsphere_Network)
 	syscall.Exec("/vsphere-init.sh", []string{}, os.Environ())
 }
 
